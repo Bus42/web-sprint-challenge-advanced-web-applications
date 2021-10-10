@@ -34,7 +34,7 @@ const Login = () => {
             onChange={handleChange}
           />
           <p id="error"></p>
-          <button type="submit">Log In</button>
+          <button id="submit" type="submit">Log In</button>
         </form>
       </ModalContainer>
     </ComponentContainer>

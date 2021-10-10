@@ -24,12 +24,14 @@ const Login = () => {
         window.localStorage.setItem("role", role);
         window.localStorage.setItem("token", token);
         clearForm();
-        push("/view");
       })
       .catch((error) => {
         console.table(error.response.data);
         setError(error.response.data.error);
-      });
+      })
+      .finally(() => {
+        push("/view")
+      })
   };
 
   return (

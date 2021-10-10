@@ -21,7 +21,18 @@ const View = (props) => {
       .catch((err) => console.error(err));
   };
 
-  const handleEdit = (article) => {};
+  const handleEdit = (article) => {
+      axiosWithAuth({
+          method: "put",
+          endpoint: `/articles/${article.id}`,
+          body: article
+      })
+      .then(({data}) => setArticles(data))
+      .catch((err) => console.error(err))
+      .finally(() => {
+          setEditing(false)
+      })
+  };
 
   const handleEditSelect = (id) => {
     setEditing(true);
@@ -35,7 +46,7 @@ const View = (props) => {
   useEffect(() => {
     articleService()
       .then((res) => setArticles(res))
-      .catch((err) => console.error(error));
+      .catch((err) => console.error(err));
   }, []);
 
   return (

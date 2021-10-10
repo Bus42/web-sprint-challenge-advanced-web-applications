@@ -22,7 +22,13 @@ test('renders component without errors', ()=> {
 });
 
 test('renders headline, author from the article when passed in through props', ()=> {
-    render(<Article article={testArticle} />)
+    render(<Article article={{...testArticle, author: "Tony Stark"}} />)
+
+    const headline = screen.getByText(testArticle.headline)
+    const author = screen.getByText(/tony stark/i)
+
+    expect(headline).toBeInTheDocument();
+    expect(author).toBeInTheDocument();
 });
 
 // test('renders "Associated Press" when no author is given', ()=> {

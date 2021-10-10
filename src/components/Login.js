@@ -1,43 +1,43 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import useForm from "../hooks/useForm.jsx";
-import axiosWithAuth from "../utils/axiosWithAuth"
-import {useHistory} from 'react-router-dom';
+import axiosWithAuth from "../utils/axiosWithAuth";
+import { useHistory } from "react-router-dom";
 
 const Login = () => {
   const { formValues, handleChange, clearForm } = useForm();
   const [error, setError] = useState(null);
-  const {push} = useHistory();
+  const { push } = useHistory();
 
   const handleSubmit = (e) => {
-      // clear errors on new submission
-      setError(null)
+    // clear errors on new submission
+    setError(null);
     e.preventDefault();
     axiosWithAuth({
-        method: "post",
-        endpoint: "/login",
-        body: formValues
+      method: "post",
+      endpoint: "/login",
+      body: formValues,
     })
-    .then(({data}) => {
-        const {username, role, token} = data;
-        window.localStorage.setItem("username", username)
-        window.localStorage.setItem("role", role)
-        window.localStorage.setItem("token", token)
+      .then(({ data }) => {
+        const { username, role, token } = data;
+        window.localStorage.setItem("username", username);
+        window.localStorage.setItem("role", role);
+        window.localStorage.setItem("token", token);
         clearForm();
-        push("/view")
-    })
-    .catch(error => {
-        console.table(error.response.data)
-        setError(error.response.data.error)
-    })
-};
+        push("/view");
+      })
+      .catch((error) => {
+        console.table(error.response.data);
+        setError(error.response.data.error);
+      });
+  };
 
   return (
     <ComponentContainer>
       <ModalContainer>
         <h1>Welcome to Blogger Pro</h1>
         <h2>Please enter your account information.</h2>
-        <form id="submit" action="submit" onSubmit={handleSubmit}>
+        <form action="submit" onSubmit={handleSubmit}>
           <input
             id="username"
             type="text"
@@ -55,7 +55,9 @@ const Login = () => {
             onChange={handleChange}
           />
           {error && <p id="error">{error}</p>}
-          <button id="submit" type="submit">Log In</button>
+          <button id="submit" type="submit">
+            Log In
+          </button>
         </form>
       </ModalContainer>
     </ComponentContainer>

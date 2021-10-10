@@ -19,7 +19,10 @@ const Login = () => {
         body: formValues
     })
     .then(({data}) => {
-        window.localStorage.setItem("token", data)
+        const {username, role, token} = data;
+        window.localStorage.setItem("username", username)
+        window.localStorage.setItem("role", role)
+        window.localStorage.setItem("token", token)
         clearForm();
         push("/view")
     })

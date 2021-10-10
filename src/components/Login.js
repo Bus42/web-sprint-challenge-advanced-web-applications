@@ -1,15 +1,33 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import useForm from "../hooks/useForm.jsx";
+import axiosWithAuth from "../utils/axiosWithAuth"
+import {useHistory} from 'react-router-dom';
 
 const Login = () => {
   const { formValues, handleChange, clearForm } = useForm();
+  const [error, setError] = useState(null)
+  const {push} = useHistory();
 
   const handleSubmit = (e) => {
+      // clear errors on new submission
+      setError(null)
     e.preventDefault();
-    clearForm();
-    console.table(formValues);
-  };
+    axiosWithAuth({
+        method: "post",
+        endpoint: "/login",
+        body: formValues
+    })
+    .then(({data}) => {
+        window.localStorage.setItem("token", data)
+        clearForm();
+        push("/view")
+    })
+    .catch(error => {
+        console.table(error.response.data)
+        setError(error.response.data.error)
+    })
+};
 
   return (
     <ComponentContainer>
@@ -33,7 +51,7 @@ const Login = () => {
             name="password"
             onChange={handleChange}
           />
-          <p id="error"></p>
+          {error && <p id="error">{error}</p>}
           <button id="submit" type="submit">Log In</button>
         </form>
       </ModalContainer>

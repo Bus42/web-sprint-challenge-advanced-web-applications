@@ -5,13 +5,21 @@ import Article from "./Article";
 import EditForm from "./EditForm";
 
 import articleService from "../services/articleServices";
+import axiosWithAuth from "../utils/axiosWithAuth";
 
 const View = (props) => {
   const [articles, setArticles] = useState([]);
   const [editing, setEditing] = useState(false);
   const [editId, setEditId] = useState();
 
-  const handleDelete = (id) => {};
+  const handleDelete = (id) => {
+    axiosWithAuth({
+      method: "delete",
+      endpoint: `/articles/${id}`,
+    })
+      .then(({data}) => setArticles(data))
+      .catch((err) => console.error(err));
+  };
 
   const handleEdit = (article) => {};
 
@@ -26,8 +34,8 @@ const View = (props) => {
 
   useEffect(() => {
     articleService()
-    .then(res => setArticles(res))
-    .catch(err => console.error(error))
+      .then((res) => setArticles(res))
+      .catch((err) => console.error(error));
   }, []);
 
   return (

@@ -32,10 +32,12 @@ const EditForm = (props) => {
   };
 
   useEffect(() => {
-    axiosWithAuth({
-      method: "get",
-      endpoint: `/articles/${editId}`,
-    })
+    // axiosWithAuth({
+    //   method: "get",
+    //   endpoint: `/articles/${editId}`,
+    // })
+    axiosWithAuth()
+    .get(`/articles/${editId}`)
       .then(({ data }) => {
         setArticle(data);
       })

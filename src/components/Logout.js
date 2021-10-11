@@ -5,10 +5,12 @@ import { useHistory } from "react-router-dom";
 const Logout = () => {
   const { push } = useHistory();
   useEffect(() => {
-    axiosWithAuth({
-      method: "post",
-      endpoint: "/logout",
-    })
+    // axiosWithAuth({
+    //   method: "post",
+    //   endpoint: "/logout",
+    // })
+    axiosWithAuth()
+      .post("/logout")
       .then(({ data }) => {
         window.localStorage.removeItem("username");
         window.localStorage.removeItem("role");

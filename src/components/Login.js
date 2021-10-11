@@ -13,11 +13,13 @@ const Login = () => {
     // clear errors on new submission
     setError(null);
     e.preventDefault();
-    axiosWithAuth({
-      method: "post",
-      endpoint: "/login",
-      body: formValues,
-    })
+    // axiosWithAuth({
+    //   method: "post",
+    //   endpoint: "/login",
+    //   body: formValues,
+    // })
+    axiosWithAuth()
+    .post("/login", formValues)
       .then(({ data }) => {
         const { username, role, token } = data;
         window.localStorage.setItem("username", username);

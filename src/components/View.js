@@ -13,20 +13,24 @@ const View = (props) => {
   const [editId, setEditId] = useState();
 
   const handleDelete = (id) => {
-    axiosWithAuth({
-      method: "delete",
-      endpoint: `/articles/${id}`,
-    })
+    // axiosWithAuth({
+    //   method: "delete",
+    //   endpoint: `/articles/${id}`,
+    // })
+    axiosWithAuth()
+    .delete(`/articles/${id}`)
       .then(({data}) => setArticles(data))
       .catch((err) => console.error(err));
   };
 
   const handleEdit = (article) => {
-      axiosWithAuth({
-          method: "put",
-          endpoint: `/articles/${article.id}`,
-          body: article
-      })
+      // axiosWithAuth({
+      //     method: "put",
+      //     endpoint: `/articles/${article.id}`,
+      //     body: article
+      // })
+      axiosWithAuth()
+      .put(`/articles/${article.id}`, article)
       .then(({data}) => setArticles(data))
       .catch((err) => console.error(err))
       .finally(() => {
